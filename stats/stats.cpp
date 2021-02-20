@@ -16,9 +16,12 @@
 //	float av_wait_time;
 //	float av_turnaround_time;
 //	float av_response_time;
+
+//not sure if this is necessary
 Stats::Stats(std::vector<PCB> &finished_vector){
 	calcStats();
 }
+
 //does the work (only needs to run once)
 void Stats::calcStats() {
 	float sum_response = 0;
