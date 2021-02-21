@@ -39,9 +39,21 @@ bool Scheduler::isEmpty() {
 //true - switch processes
 //false - do not switch
 bool Scheduler::time_to_switch_processes(int tick_count, PCB &p) {
-	if (p.remaining_cpu_time <= 0) {
-		return true;
+
+//	if (p.remaining_cpu_time <= 0) {
+//		return true;
+//	}
+
+	if (preemptive) {
+		int total_time = p.required_cpu_time - p.remaining_cpu_time;
+		int current_slice = total_time % time_slice;
+
+		if (total_time > 0 && current_slice == 0) {
+			return true;
+		}
 	}
+
+	return p.remaining_cpu_time <= 0;
 //	int relativeTick = 0;
 
 //	if (preemptive && (tick_count - p.start_time % time_slice == 0)) {
@@ -50,5 +62,4 @@ bool Scheduler::time_to_switch_processes(int tick_count, PCB &p) {
 //		return true;
 //	}
 
-	return false;
 }
