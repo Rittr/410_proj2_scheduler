@@ -14,24 +14,24 @@
 
 //pull current process (if any) off CPU and return it
 //if nothing on CPU returns an uninitialized PCB
-PCB Dispatcher::get_from_CPU(){
-//	if (isValidJobOnCPU){
-////		return cpu->current_Process;
-//
-//	}
-//
-//	return PCB();
+PCB Dispatcher::get_from_CPU() {
+//	if (isValidJobOnCPU) {
+	if (!cpu->get_COPY_of_Current_Process().isEmpty()) {
+//		return cpu->current_Process;
+		return cpu->get_process_off_core();
+	}
 
-	return cpu->get_process_off_core();
+	return PCB();
 }
 
 //place the current process on the CPU for execution
-void Dispatcher::put_on_CPU(PCB &process){
+void Dispatcher::put_on_CPU(PCB &process) {
 	cpu->put_process_on_core(process);
 }
 
 //is CPU idle or working
-bool Dispatcher::isValidJobOnCPU(){
-//	return (cpu->current_Process != NULL);
+bool Dispatcher::isValidJobOnCPU() {
+//	return (cpu->current_Process != NULL); //can't access private field
 	return !cpu->get_COPY_of_Current_Process().isEmpty();
+//	return (cpu->get_COPY_of_Current_Process().process_number != UNINITIALIZED);
 }
