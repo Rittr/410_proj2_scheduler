@@ -9,27 +9,20 @@
  */
 
 #include <algorithm>
-#include <vector>
 #include "../includes/scheduler_SRTF.h"
 
-//this is a  preemptive scheduler, so set the preemptive member variable to true
-//when calling the base class
-//Scheduler::Scheduler_SRTF(std::queue<PCB> &queue){};
-//virtual ~Scheduler_SRTF() {};
-
-//override base class behaviour if necessary, otherwise call it
+//override base class behavior if necessary, otherwise call it
 bool Scheduler_SRTF::time_to_switch_processes(int tick_count, PCB &p) {
-//	sort();
 
-	if (ready_q->front().remaining_cpu_time > 0 &&
-			ready_q->front().remaining_cpu_time<p.remaining_cpu_time){
+	if (ready_q->front().remaining_cpu_time > 0
+			&& ready_q->front().remaining_cpu_time < p.remaining_cpu_time) {
 		return true;
-//		if ready_q->front().remaining_cpu
 	}
 
 	return Scheduler::time_to_switch_processes(tick_count, p);
 }
 
+//helper function to sort PCB's by required CPU time
 bool sortHelper(PCB a, PCB b) {
 	return a.required_cpu_time < b.required_cpu_time;
 }
